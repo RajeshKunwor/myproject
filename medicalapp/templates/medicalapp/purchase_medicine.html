@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase Medicine</title>
+</head>
+<body>
+    <h4> Add Purchase Medicine</h4>
+    <button type="button" data-bind="click: add">Add</button>
+    <form method="post" action="{% url 'add_purchase_medicine' %}" load-medicine="{% url 'load-medicine' %}">
+
+        <table border="1">
+            <thead>
+            <th>Medicine Name</th>
+            <th>Rate</th>
+            <th>Quantity</th>
+            <th>Manufacture Date</th>
+            <th>Expiry_Date</th>
+            <th>Sub Total</th>
+            <th>Action</th>
+            </thead>
+
+            <tbody data-bind="foreach: medicinePurchaseArray">
+                <tr>
+                    <td>
+                        <select data-bind="options: $root.medicineList,
+                                           optionsText: 'name',
+
+                                           value: medicineId">
+                        </select>
+                    </td>
+                    <td><input data-bind="textInput: newRate"> </td>
+                    <td><input type="number" data-bind="value: quantity"> </td>
+                    <td><input type="date" data-bind="value: manufacture_date"></td>
+                    <td><input type="date" data-bind="value: expiry_date"> </td>
+                    <td data-bind="text: subTotal"></td>
+                    <td><a href="#" data-bind="click: $root.remove">Remove</a></td>
+                </tr>
+            </tbody>
+            <tr>
+                <td colspan="5">Discount</td>
+                <td><input data-bind="value: discount"></td>
+            </tr>
+            <tr>
+                <td colspan="5">GrandTotal </td>
+                <td><span data-bind="text: grandTotal"></span></td>
+            </tr>
+            <tr>
+                <td colspan="5">Net Total</td>
+                <td><span data-bind="text: netTotal"></span> </td>
+            </tr>
+
+      </table>
+        <button data-bind="click: save">Save</button>
+    </form>
+
+
+    <script src="{% static 'medicalapp/jquery.js' %}"></script>
+    <script src="{% static 'medicalapp/knockout.js' %}"></script>
+    <script src="{% static 'medicalapp/purchase_medicine.js' %}"></script>
+</body>
+</html>

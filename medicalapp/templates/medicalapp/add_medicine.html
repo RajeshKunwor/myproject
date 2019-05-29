@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Medicine</title>
+</head>
+<body>
+
+    <h4> Add Medicine</h4>
+    <button type="button" data-bind="click: add">Add Medicine</button>
+    <form method="post" action="{% url 'save_medicine' %}">
+        <table border ="1">
+            <thead>
+                <th>Name</th>
+                <th>Rate</th>
+                <th>Description</th>
+                <th>Action</th>
+
+            </thead>
+            <tbody data-bind="foreach: medicineArray">
+                <tr>
+                    <td><input data-bind="value: name"></td>
+                    <td><input data-bind="value: rate"></td>
+                    <td><textarea data-bind="value: description"></textarea></td>
+                    <td><a href="#" data-bind="click: $root.remove">Remove</a> </td>
+                </tr>
+            </tbody>
+        </table>
+        <button data-bind="click: save">Save</button>
+    </form>
+
+    <script src="{% static 'medicalapp/jquery.js' %}"></script>
+    <script src="{% static 'medicalapp/knockout.js' %}"></script>
+    <script src="{% static 'medicalapp/add_medicine.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Medicine</title>
+    <style>
+        .expire{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h4>List of Medicine</h4>
+    <table border="1" url="{% url 'medicine' %}">
+        <thead>
+            <th>S.N.</th>
+            <th>Name</th>
+            <th> Quantity</th>
+            <th>Manufactureing Date</th>
+            <th>Expiry Date</th>
+            <th>Day remain to be exprired</th>
+
+        </thead>
+
+        <tbody data-bind="foreach: medicineArray">
+            <tr data-bind="css:{ expire: expiry_day == 0} ">
+                <td data-bind="text: $index()+1"></td>
+                <td data-bind="text: name"></td>
+                <td data-bind="text: quantity"></td>
+                <td data-bind="text: manufacture_date"></td>
+                <td data-bind="text: expiry_date"></td>
+                <td data-bind="text: expiry_day"></td>
+
+            </tr>
+        </tbody>
+
+    </table>
+    <script src="{% static 'medicalapp/jquery.js' %}"></script>
+    <script src="{% static 'medicalapp/knockout.js' %}"></script>
+    <script src="{% static 'medicalapp/medicine.js' %}"></script>
+</body>
+</html>

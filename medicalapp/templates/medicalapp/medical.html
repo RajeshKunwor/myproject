@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical</title>
+</head>
+<body>
+    <h4>Add Meicine</h4>
+    <form method="post" action="{% url 'add_medicine' %}">
+        <button type="button" data-bind="click: add">Add Medicine</button>
+        <table>
+            <tr>
+                <td>Name: <input data-bind="value: medicineName"/></td>
+                <td>Quantity: <input type="number" data-bind="value: quantity"/></td>
+                <td>Manufacturing Date: <input type="date" data-bind="value: manufacture_date"/></td>
+                <td>Expiry Date: <input type="date" data-bind="value: expiry_date"/></td>
+
+            </tr>
+
+        </table>
+    </form>
+
+    <table border="1">
+        <thead>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Manufacturing Date</th>
+            <th>Expiry Date</th>
+            <th>Action</th>
+        </thead>
+        <tbody data-bind="foreach: medicineArray">
+            <tr>
+                <td data-bind="text: name"></td>
+                <td data-bind="text: quantity"></td>
+                <td data-bind="text: manufacture_date"></td>
+                <td data-bind="text: expiry_date"></td>
+                <td><a href="#" data-bind="click: $root.remove">Remove</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <button data-bind="click: saveMedicine">Save</button>
+    <script src="{% static 'medicalapp/jquery.js' %}"></script>
+    <script src="{% static 'medicalapp/knockout.js' %}"></script>
+    <script src="{% static 'medicalapp/medical.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% load mptt_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medicine Categroy</title>
+</head>
+<body>
+    <h4>Medicine Category List</h4>
+    <ul>
+        {% recursetree category %}
+            <li>
+                {{ node.name }}
+                {% if not node.is_leaf_node %}
+                     <ul class="children">
+                        {{ children }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endrecursetree %}
+    </ul>
+
+</body>
+</html>
