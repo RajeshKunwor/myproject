@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 {% load mptt_tags %}
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Medicine Categroy</title>
+    <link rel="stylesheet" href ="{% static 'jquery-treetable-master/css/jquery.treetable.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-treetable-master/css/jquery.treetable.theme.default.css' %}">
 </head>
 <body>
     <h4>Medicine Category List</h4>
-    <ul>
+    <ul class="root">
         {% recursetree category %}
             <li>
                 {{ node.name }}
@@ -19,6 +22,59 @@
             </li>
         {% endrecursetree %}
     </ul>
+    <table border="1" id="mytable">
+        <thead>
+        <tr>
+            <th>Category</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% recursetree category %}
+        <tr data-tt-id="{{ node.id }}" data-tt-parent-id="{{ node.parent_id }}">
+            <td>
+                {% if node.is_leaf_node %}
+                <b><i>{{ node.name }}</i></b>
+                {% else %}
+                <strong style="color: blue; font-size: 20px;">{{ node.name }}</strong>
+                {% endif %}
 
+
+
+            </td>
+        </tr>
+          {% for m in node.medicine.all %}
+        <tr data-tt-id="{{ m.id}}" data-tt-parent-id="{{ m.category_id }}">
+            <td>
+
+                <i>{{ m.name }}</i>
+
+            </td>
+        </tr>
+        {% endfor %}
+        {% if not node.is_leaf_node %}
+
+                {{ children }}
+
+        {% endif %}
+
+        {% endrecursetree %}
+        </tbody>
+    </table>
+<h4>Medicine Form</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" nane="submit" value="Submit"/>
+    </form>
+    <!--<h4>Medicine Category Form</h4>-->
+    <!--<form method="post">-->
+        <!--{{ category_form.as_p }}-->
+        <!--<input type="submit" nane="submit" value="Submit"/>-->
+    <!--</form>-->
+    <script src="{% static 'medicalapp/jquery.js' %}"></script>
+	<script src ="{% static 'jquery-treetable-master/jquery.treetable.js' %}"></script>
+    <script>
+ 		$("#mytable").treetable({ expandable: true });
+	</script>
 </body>
 </html>

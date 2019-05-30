@@ -6,6 +6,7 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
+from .forms import *
 
 from .models import *
 
@@ -174,9 +175,35 @@ class MedicinePurchaseListView(View):
 
 class MedicineCategoryView(View):
 
+    form = MedicineCategoryForm()
+    category_form = CategoryForm()
     def get(self, request):
         left_leg = MedicineCatetory.objects.filter(name='left leg')
-        print left_leg.get_ancestors(include_self = True).values()
-        category = MedicineCatetory.objects.all()
 
-        return render(request, "medicalapp/medicine_category.html",{"category": category})
+        category = MedicineCatetory.objects.all()
+        medicine = Medicine1.objects.all()
+        print medicine
+        context = {
+            'category': category,
+            'medicine': medicine,
+            'form': self.form,
+            'category_form': self.category_form,
+        }
+
+        return render(request, "medicalapp/medicine_category.html",context)
+
+    def post(self, request):
+        name = request.POST.get("name")
+        category = request.POST.get("category")
+        m = Medicine1(name=name, category_id=category)
+        m.save()
+
+
+
+class MedicalCategoryView(View):
+
+    form = MedicineCategoryForm()
+    def get(self, request):
+        return render(request, "medicalapp/medicine_category.html", {'form': self.form})
+
+

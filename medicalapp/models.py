@@ -12,8 +12,19 @@ class MedicineCatetory(MPTTModel):
     name = models.CharField(max_length=100)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='children')
 
+    def __str__(self):
+        return self.name
+
     class MPTTMeta:
         order_insertioin_by = ['name']
+
+class Medicine1(models.Model):
+
+    category = models.ForeignKey(MedicineCatetory, on_delete=models.CASCADE, related_name="medicine")
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class Hospital(models.Model):

@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'medicine_purchase_list/$', MedicinePurchaseTemplateView.as_view()),
     url(r'medicine_purchase_load/$', MedicinePurchaseListView.as_view(), name='medicine_purchase_load'),
     url(r'^medicine_category/$', MedicineCategoryView.as_view()),
+
 ]
